@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -252,6 +253,14 @@
         .snap table th {
             background: #e2e8f0;
             color: #4a5568;
+        }
+
+        .snap-balance {
+            margin-top: 12px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-green);
         }
 
     </style>
@@ -677,10 +686,21 @@
                     const d = s.data();
                     const when = d.createdAt?.toDate?.() ? d.createdAt.toDate().toLocaleString("az-AZ") : "(vaxt yoxdur)";
                     const rows = d.rows || [];
+                    let total = 0;
+
                     let rowsHtml = `<table class="history-table"><thead><tr>
                         <th>#</th><th>Hesab</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
                     </tr></thead><tbody>`;
                     rows.forEach(r => {
+                        // balansın hesablanması
+                        const nums = [r.n1, r.n2, r.n3, r.n4, r.n5];
+                        nums.forEach(val => {
+                            if (val !== "" && val !== null && val !== undefined) {
+                                const num = Number(val);
+                                if (!Number.isNaN(num)) total += num;
+                            }
+                        });
+
                         rowsHtml += `<tr>
                             <td>${r.no ?? ""}</td>
                             <td>${escapeHtml(r.account ?? "")}</td>
@@ -688,7 +708,8 @@
                         </tr>`;
                     });
                     rowsHtml += `</tbody></table>`;
-                    parts.push(`<div class="snap"><h4>${when}</h4>${rowsHtml}</div>`);
+                    const balanceHtml = `<div class="snap-balance">Balans: ${fmt(total)}</div>`;
+                    parts.push(`<div class="snap"><h4>${when}</h4>${rowsHtml}${balanceHtml}</div>`);
                 });
                 snapshotsDiv.innerHTML = parts.join("");
             } catch (e) {
@@ -703,3 +724,4 @@
     </script>
 </body>
 </html>
+```
