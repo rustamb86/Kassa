@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>UNİVERSAL KASSA SİSTEMİ</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-color: #f0f4f8;
@@ -18,17 +19,23 @@
             --border-color: #e2e8f0;
             --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+            color-scheme: light;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            background: var(--bg-color);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
-            background: var(--bg-color);
             color: var(--text-color);
             padding: 24px;
         }
@@ -41,10 +48,7 @@
             color: var(--text-color);
         }
 
-        .wrap {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+        .wrap { max-width: 1100px; margin: 0 auto; }
 
         .card {
             background: var(--card-bg);
@@ -52,7 +56,7 @@
             box-shadow: var(--shadow-light);
             padding: 24px;
         }
-        
+
         .toolbar {
             display: flex;
             gap: 12px;
@@ -69,15 +73,10 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
-        .toolbar button:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        #logoutBtn {
-            background: var(--primary-red);
-            margin-left: auto;
-        }
+        .toolbar button:hover { opacity: 0.9; transform: translateY(-1px); }
+        #logoutBtn { background: var(--primary-red); margin-left: auto; }
 
         #status {
             margin: 8px 0 24px;
@@ -94,6 +93,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .modules button {
             background: var(--card-bg);
@@ -109,7 +109,8 @@
             transform: translateY(-2px);
             box-shadow: var(--shadow-light);
         }
-        
+
+        /* ==== TABLE (DESKTOP) ==== */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -117,6 +118,7 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border-color);
+            background: #fff;
         }
         thead th {
             position: sticky;
@@ -132,32 +134,46 @@
             border: 1px solid var(--border-color);
             text-align: center;
             padding: 10px 8px;
+            vertical-align: middle;
         }
         th:nth-child(1), td:nth-child(1) { width: 45px; }
         th:nth-child(2), td:nth-child(2) { width: 200px; text-align: left; padding: 10px 12px; }
         th:nth-child(8), td:nth-child(8) { width: 220px; }
+
         tbody tr:nth-child(even) { background: #f7fafc; }
         tbody tr:hover { background: #eff6ff; transition: background 0.12s; }
 
+        /* ✅ INPUT: mobilde rəqəm görünməməsi fix */
         td input {
             width: 98%;
             padding: 8px;
             font-size: 16px;
             font-weight: 600;
             text-align: center;
-            background: transparent;
-            border: 1px solid transparent;
+
+            background: #ffffff !important;
+            color: var(--text-color) !important;
+            -webkit-text-fill-color: var(--text-color) !important;
+            opacity: 1 !important;
+
+            border: 1px solid var(--border-color) !important;
             border-radius: 6px;
             transition: border-color 0.2s;
+            min-width: 0;
+            caret-color: var(--primary-blue);
         }
         td input:focus {
             outline: none;
-            border: 1px solid var(--primary-blue);
+            border: 1px solid var(--primary-blue) !important;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-            background: var(--card-bg);
         }
-        td input.neg { color: var(--primary-red); }
-        td input.pos { color: var(--primary-green); }
+
+        td input[type="number"] { -webkit-appearance: none; appearance: textfield; }
+        td input[type="number"]::-webkit-outer-spin-button,
+        td input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+        td input.neg { color: var(--primary-red) !important; -webkit-text-fill-color: var(--primary-red) !important; }
+        td input.pos { color: var(--primary-green) !important; -webkit-text-fill-color: var(--primary-green) !important; }
 
         .ops {
             display: flex;
@@ -173,6 +189,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s;
+            white-space: nowrap;
         }
         .ops button:hover { transform: scale(1.05); }
         .ops button.sum { background: var(--primary-blue); }
@@ -189,17 +206,15 @@
             border-radius: 12px;
             margin-top: 24px;
             box-shadow: var(--shadow-md);
+            overflow-wrap: anywhere;
         }
 
-        #login {
-            text-align: center;
-            margin-top: 48px;
-        }
-        #login h2 { color: var(--text-color); }
+        #login { text-align: center; margin-top: 48px; }
         #login input {
             font-size: 16px;
             padding: 14px 20px;
             width: 320px;
+            max-width: 100%;
             margin: 12px 0;
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -223,14 +238,10 @@
             transition: background 0.2s;
             margin-top: 8px;
         }
-        #login button:hover {
-            background: #059669;
-        }
+        #login button:hover { background: #059669; }
 
-        #topToolbar, #appHome, #appKassa, #historyPanel {
-            display: none;
-        }
-        
+        #topToolbar, #appHome, #appKassa, #historyPanel { display: none; }
+
         .snap {
             border-radius: 12px;
             background: var(--card-bg);
@@ -246,460 +257,529 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 8px;
         }
-        .snap table {
-            border-radius: 8px;
-        }
-        .snap table th {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
+        .snap table { border-radius: 8px; }
+        .snap table th { background: #e2e8f0; color: #4a5568; }
 
+        /* ===========================
+           ✅ MOBİL: CƏDVƏLİ KART EDİR
+           =========================== */
+        @media (max-width: 700px) {
+            body { padding: 14px; }
+            .card { padding: 16px; border-radius: 14px; }
+            h2 { font-size: 20px; }
+
+            #logoutBtn { margin-left: 0; }
+
+            /* toolbar düymələri dar ekranda rahat */
+            .toolbar button { width: 100%; }
+
+            /* liveWrap artıq scroll deyil, kartdır */
+            #liveWrap { overflow: visible; }
+
+            table { table-layout: auto; border: none; background: transparent; }
+            thead { display: none; } /* başlıqları gizlədirik */
+
+            tbody tr {
+                display: block;
+                background: #fff;
+                border: 1px solid var(--border-color);
+                border-radius: 14px;
+                padding: 10px;
+                margin-bottom: 12px;
+                box-shadow: var(--shadow-light);
+            }
+
+            tbody tr:hover { background: #fff; }
+
+            tbody td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                padding: 8px 6px;
+                border: none;
+                border-bottom: 1px solid #edf2f7;
+                text-align: left;
+            }
+            tbody td:last-child { border-bottom: none; }
+
+            /* label (solda) */
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #4a5568;
+                flex: 0 0 88px;
+                max-width: 88px;
+            }
+
+            /* inputlar sağda */
+            tbody td input {
+                width: 100% !important;
+                max-width: 220px;
+                text-align: right;
+                font-size: 15px;
+                padding: 8px 10px;
+            }
+
+            /* “Hesab” inputu daha geniş */
+            tbody td[data-label="Hesab"] input {
+                max-width: 260px;
+                text-align: left;
+            }
+
+            /* əməliyyat düymələri alt-alta */
+            .ops { width: 100%; justify-content: flex-end; }
+            .ops button { flex: 1; min-width: 88px; }
+
+            .balance-panel {
+                font-size: 18px;
+                padding: 14px 16px;
+                text-align: left;
+                margin-top: 14px;
+            }
+
+            /* Tarixçə: çox uzun ola bilər, scroll saxlayırıq */
+            .snap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .snap table { min-width: 720px; }
+        }
     </style>
 </head>
+
 <body>
-    <div class="wrap">
-        <div id="status">Status: Yoxlanılır...</div>
+<div class="wrap">
+    <div id="status">Status: Yoxlanılır...</div>
 
-        <div class="toolbar" id="topToolbar">
-            <button id="historyBtn">Tarixçə</button>
-            <button id="backLiveBtn" style="display:none;">Cari vəziyyət</button>
-            <button id="logoutBtn">Çıxış</button>
-        </div>
+    <div class="toolbar" id="topToolbar">
+        <button id="historyBtn">Tarixçə</button>
+        <button id="backLiveBtn" style="display:none;">Cari vəziyyət</button>
+        <button id="logoutBtn">Çıxış</button>
+    </div>
 
-        <div id="login" class="card">
-            <h2>KASSA HESABATI</h2>
-            <input type="text" id="user" placeholder="İstifadəçi adı"><br>
-            <input type="password" id="pass" placeholder="Şifrə"><br>
-            <button onclick="giris()">Daxil ol</button>
-            <p id="error" style="color:var(--primary-red); font-weight: 600; margin-top: 12px;"></p>
-        </div>
+    <div id="login" class="card">
+        <h2>KASSA HESABATI</h2>
+        <input type="text" id="user" placeholder="İstifadəçi adı"><br>
+        <input type="password" id="pass" placeholder="Şifrə"><br>
+        <button onclick="giris()">Daxil ol</button>
+        <p id="error" style="color:var(--primary-red); font-weight: 600; margin-top: 12px;"></p>
+    </div>
 
-        <div id="appHome" class="card">
-            <h2>MODULLAR</h2>
-            <div class="modules">
-                <button id="openKassaBtn">KASSA</button>
-            </div>
-        </div>
-
-        <div id="appKassa" class="card">
-            <h2>KASSA HESABATI</h2>
-            <div class="toolbar">
-                <button id="homeBtn">Ana səhifə</button>
-                <button id="yeniBtn" style="background: var(--primary-green);">+ Sətir əlavə et</button>
-            </div>
-            <div id="liveWrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Hesab</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                            <th>Əməliyyat</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody"></tbody>
-                </table>
-            </div>
-            <div class="balance-panel">
-                Balans: <span id="umumi">0</span>
-            </div>
-        </div>
-
-        <div id="historyPanel" class="card">
-            <h2>TARİXÇƏ</h2>
-            <div id="snapshots"></div>
+    <div id="appHome" class="card">
+        <h2>MODULLAR</h2>
+        <div class="modules">
+            <button id="openKassaBtn">KASSA</button>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp, query, orderBy, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    <div id="appKassa" class="card">
+        <h2>KASSA HESABATI</h2>
+        <div class="toolbar">
+            <button id="homeBtn">Ana səhifə</button>
+            <button id="yeniBtn" style="background: var(--primary-green);">+ Sətir əlavə et</button>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyD1K5MnVvvHGIdiOTlGjQcqBqtIId7Tkz8",
-            authDomain: "kassa-11972.firebaseapp.com",
-            projectId: "kassa-11972",
-            storageBucket: "kassa-11972.firebasestorage.app",
-            messagingSenderId: "597453262060",
-            appId: "1:597453262060:web:d08c7aca28522f8fd869c9",
-            measurementId: "G-PXYCSSNZS5"
-        };
+        <div id="liveWrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Hesab</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>Əməliyyat</th>
+                </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        <div class="balance-panel">
+            Balans: <span id="umumi">0</span>
+        </div>
+    </div>
 
-        const statusEl = document.getElementById("status");
-        const setStatus = (t) => statusEl.textContent = "Status: " + t;
-        const fmt = (n) => new Intl.NumberFormat("az-AZ").format(n);
+    <div id="historyPanel" class="card">
+        <h2>TARİXÇƏ</h2>
+        <div id="snapshots"></div>
+    </div>
+</div>
 
-        const loginDiv = document.getElementById("login");
-        const topToolbar = document.getElementById("topToolbar");
-        const appHome = document.getElementById("appHome");
-        const appKassa = document.getElementById("appKassa");
-        const openKassaBtn = document.getElementById("openKassaBtn");
-        const homeBtn = document.getElementById("homeBtn");
-        const historyPanel = document.getElementById("historyPanel");
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp, query, orderBy, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        const rowsCol = collection(db, "rows");
-        const snapsCol = collection(db, "snapshots");
-        const tbody = document.getElementById("tbody");
-        const umumiEl = document.getElementById("umumi");
-        const yeniBtn = document.getElementById("yeniBtn");
-        const historyBtn = document.getElementById("historyBtn");
-        const backLiveBtn = document.getElementById("backLiveBtn");
-        const logoutBtn = document.getElementById("logoutBtn");
-        const snapshotsDiv = document.getElementById("snapshots");
+    const firebaseConfig = {
+        apiKey: "AIzaSyD1K5MnVvvHGIdiOTlGjQcqBqtIId7Tkz8",
+        authDomain: "kassa-11972.firebaseapp.com",
+        projectId: "kassa-11972",
+        storageBucket: "kassa-11972.firebasestorage.app",
+        messagingSenderId: "597453262060",
+        appId: "1:597453262060:web:d08c7aca28522f8fd869c9",
+        measurementId: "G-PXYCSSNZS5"
+    };
 
-        let loggedIn = false, unsubscribeLive = null, isEditing = false, hasPendingSnapshot = false, latestDocs = [], authReady = false;
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        function showView(id) {
-            ["login", "appHome", "appKassa", "historyPanel"].forEach(v => {
-                const el = document.getElementById(v);
-                if (el) el.style.display = "none";
-            });
-            document.getElementById(id).style.display = "block";
-        }
+    const statusEl = document.getElementById("status");
+    const setStatus = (t) => statusEl.textContent = "Status: " + t;
+    const fmt = (n) => new Intl.NumberFormat("az-AZ").format(n);
 
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                authReady = true;
-                setStatus("Auth OK");
-                if (loggedIn && !unsubscribeLive) startLive();
-            } else {
-                authReady = false;
-                setStatus("Auth yoxdur, qoşulur...");
-                try {
-                    await signInAnonymously(auth);
-                } catch (e) {
-                    setStatus("Auth Xəta: " + e.message);
-                }
-            }
+    const loginDiv = document.getElementById("login");
+    const topToolbar = document.getElementById("topToolbar");
+    const appHome = document.getElementById("appHome");
+    const appKassa = document.getElementById("appKassa");
+    const openKassaBtn = document.getElementById("openKassaBtn");
+    const homeBtn = document.getElementById("homeBtn");
+    const historyPanel = document.getElementById("historyPanel");
+
+    const rowsCol = collection(db, "rows");
+    const snapsCol = collection(db, "snapshots");
+    const tbody = document.getElementById("tbody");
+    const umumiEl = document.getElementById("umumi");
+    const yeniBtn = document.getElementById("yeniBtn");
+    const historyBtn = document.getElementById("historyBtn");
+    const backLiveBtn = document.getElementById("backLiveBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const snapshotsDiv = document.getElementById("snapshots");
+
+    let loggedIn = false, unsubscribeLive = null, isEditing = false, hasPendingSnapshot = false, latestDocs = [], authReady = false;
+
+    function showView(id) {
+        ["login", "appHome", "appKassa", "historyPanel"].forEach(v => {
+            const el = document.getElementById(v);
+            if (el) el.style.display = "none";
         });
-        try {
-            await signInAnonymously(auth);
-        } catch (e) {}
+        document.getElementById(id).style.display = "block";
+    }
 
-        tbody.addEventListener('focusin', () => { isEditing = true; }, true);
-        tbody.addEventListener('focusout', () => {
-            setTimeout(() => {
-                isEditing = false;
-                if (hasPendingSnapshot) {
-                    renderFromDocs(latestDocs);
-                    hasPendingSnapshot = false;
-                }
-            }, 80);
-        }, true);
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            authReady = true;
+            setStatus("Auth OK");
+            if (loggedIn && !unsubscribeLive) startLive();
+        } else {
+            authReady = false;
+            setStatus("Auth yoxdur, qoşulur...");
+            try { await signInAnonymously(auth); }
+            catch (e) { setStatus("Auth Xəta: " + e.message); }
+        }
+    });
 
-        window.giris = function() {
-            const u = document.getElementById("user").value.trim();
-            const p = document.getElementById("pass").value.trim();
-            if (u === "admin" && p === "1234") {
-                loggedIn = true;
-                loginDiv.style.display = "none";
-                topToolbar.style.display = "flex";
-                showView("appHome");
-                if (authReady) startLive();
-            } else {
-                document.getElementById("error").innerText = "İstifadəçi adı və ya şifrə yanlışdır!";
+    try { await signInAnonymously(auth); } catch (e) {}
+
+    tbody.addEventListener('focusin', () => { isEditing = true; }, true);
+    tbody.addEventListener('focusout', () => {
+        setTimeout(() => {
+            isEditing = false;
+            if (hasPendingSnapshot) {
+                renderFromDocs(latestDocs);
+                hasPendingSnapshot = false;
             }
-        };
+        }, 80);
+    }, true);
 
-        logoutBtn.onclick = async () => {
+    window.giris = function() {
+        const u = document.getElementById("user").value.trim();
+        const p = document.getElementById("pass").value.trim();
+        if (u === "admin" && p === "1234") {
+            loggedIn = true;
+            loginDiv.style.display = "none";
+            topToolbar.style.display = "flex";
+            showView("appHome");
+            if (authReady) startLive();
+        } else {
+            document.getElementById("error").innerText = "İstifadəçi adı və ya şifrə yanlışdır!";
+        }
+    };
+
+    logoutBtn.onclick = async () => {
+        if (!loggedIn) return;
+        if (!confirm("Çıxmaq istədiyinizə əminsiniz?")) return;
+        loggedIn = false;
+        stopLive();
+        topToolbar.style.display = "none";
+        loginDiv.style.display = "block";
+        ["appHome", "appKassa", "historyPanel"].forEach(v => {
+            const el = document.getElementById(v);
+            if (el) el.style.display = "none";
+        });
+        tbody.innerHTML = "";
+        snapshotsDiv.innerHTML = "";
+        umumiEl.textContent = "0";
+        setStatus("Çıxıldı");
+        try { await signOut(auth); } catch (e) {}
+    };
+
+    openKassaBtn.onclick = () => showView("appKassa");
+    homeBtn.onclick = () => showView("appHome");
+
+    function startLive() {
+        stopLive();
+        const q = query(rowsCol, orderBy("createdAt", "asc"));
+        unsubscribeLive = onSnapshot(q, (snap) => {
             if (!loggedIn) return;
-            if (!confirm("Çıxmaq istədiyinizə əminsiniz?")) return;
-            loggedIn = false;
-            stopLive();
-            topToolbar.style.display = "none";
-            loginDiv.style.display = "block";
-            ["appHome", "appKassa", "historyPanel"].forEach(v => {
-                const el = document.getElementById(v);
-                if (el) el.style.display = "none";
-            });
-            tbody.innerHTML = "";
-            snapshotsDiv.innerHTML = "";
-            umumiEl.textContent = "0";
-            setStatus("Çıxıldı");
-            try {
-                await signOut(auth);
-            } catch (e) {}
-        };
-
-        openKassaBtn.onclick = () => showView("appKassa");
-        homeBtn.onclick = () => showView("appHome");
-
-        function startLive() {
-            stopLive();
-            const q = query(rowsCol, orderBy("createdAt", "asc"));
-            unsubscribeLive = onSnapshot(q, (snap) => {
-                if (!loggedIn) return;
-                latestDocs = [];
-                snap.forEach(d => latestDocs.push({ id: d.id, data: d.data() }));
-                if (isEditing) hasPendingSnapshot = true;
-                else renderFromDocs(latestDocs);
-                setStatus("Firestore OK (real-time)");
-            }, err => setStatus("Firestore Xəta: " + err.message));
-        }
-
-        function stopLive() {
-            if (unsubscribeLive) {
-                unsubscribeLive();
-                unsubscribeLive = null;
-            }
-        }
-
-        function renderFromDocs(docs) {
-            tbody.innerHTML = "";
-            let total = 0, idx = 0;
-            docs.forEach(({ id, data }) => {
-                const tr = createRow(id, data, idx);
-                tbody.appendChild(tr);
-                for (let i = 1; i <= 5; i++) {
-                    total += Number(data["n" + i] ?? 0) || 0;
-                }
-                idx++;
-            });
-            umumiEl.textContent = fmt(total);
-        }
-
-        function setVisualClass(inputEl, value) {
-            inputEl.classList.remove('neg', 'pos');
-            if (value !== null && !Number.isNaN(Number(value))) {
-                const numVal = Number(value);
-                if (numVal < 0) inputEl.classList.add('neg');
-                else if (numVal > 0) inputEl.classList.add('pos');
-            }
-        }
-
-        function createRow(docId, data, index) {
-            const tr = document.createElement("tr");
-            tr.dataset.id = docId;
-
-            const tdNo = document.createElement("td");
-            tdNo.textContent = index + 1;
-            tr.appendChild(tdNo);
-
-            const tdAcc = document.createElement("td");
-            const inpAcc = document.createElement("input");
-            inpAcc.type = "text";
-            inpAcc.placeholder = "Hesab adı";
-            inpAcc.value = data.account || "";
-            inpAcc.onblur = async () => {
-                if (!loggedIn) return;
-                await updateDoc(doc(db, "rows", docId), { account: inpAcc.value ?? "" });
-                await saveSnapshot();
-            };
-            tdAcc.appendChild(inpAcc);
-            tr.appendChild(tdAcc);
-
-            const numberInputs = [];
-            for (let i = 1; i <= 5; i++) {
-                const td = document.createElement("td");
-                const inp = document.createElement("input");
-                inp.type = "number";
-                inp.step = "any";
-                const current = (data["n" + i] ?? "") === null ? "" : (data["n" + i] ?? "");
-                inp.value = current;
-                setVisualClass(inp, current);
-                inp.onblur = async () => {
-                    if (!loggedIn) return;
-                    const v = inp.value === "" ? null : Number(inp.value);
-                    setVisualClass(inp, v);
-                    await updateDoc(doc(db, "rows", docId), { ["n" + i]: v });
-                    await fetchAndRender();
-                    await saveSnapshot();
-                };
-                td.appendChild(inp);
-                tr.appendChild(td);
-                numberInputs.push(inp);
-            }
-
-            const tdOps = document.createElement("td");
-            const ops = document.createElement("div");
-            ops.className = "ops";
-
-            const btnSum = document.createElement("button");
-            btnSum.className = "sum";
-            btnSum.textContent = "Cəmlə";
-            btnSum.onclick = async () => {
-                if (!loggedIn) return;
-                const cur = {
-                    n1: Number(numberInputs[0].value) || 0,
-                    n2: Number(numberInputs[1].value) || 0,
-                    n3: Number(numberInputs[2].value) || 0,
-                    n4: Number(numberInputs[3].value) || 0,
-                    n5: Number(numberInputs[4].value) || 0,
-                };
-                const backup = {
-                    n1: numberInputs[0].value === "" ? null : Number(numberInputs[0].value),
-                    n2: numberInputs[1].value === "" ? null : Number(numberInputs[1].value),
-                    n3: numberInputs[2].value === "" ? null : Number(numberInputs[2].value),
-                    n4: numberInputs[3].value === "" ? null : Number(numberInputs[3].value),
-                    n5: numberInputs[4].value === "" ? null : Number(numberInputs[4].value),
-                };
-                const sum = cur.n1 + cur.n2 + cur.n3 + cur.n4 + cur.n5;
-                await updateDoc(doc(db, "rows", docId), {
-                    backup,
-                    n1: sum,
-                    n2: null,
-                    n3: null,
-                    n4: null,
-                    n5: null
-                });
-                await fetchAndRender();
-                await saveSnapshot();
-            };
-
-            const btnUndo = document.createElement("button");
-            btnUndo.className = "undo";
-            btnUndo.textContent = "Geri";
-            btnUndo.onclick = async () => {
-                if (!loggedIn) return;
-                const rowRef = doc(db, "rows", docId);
-                const rowSnap = await getDoc(rowRef);
-                const d = rowSnap.data();
-                if (d && d.backup) {
-                    await updateDoc(rowRef, {
-                        n1: d.backup.n1 ?? null,
-                        n2: d.backup.n2 ?? null,
-                        n3: d.backup.n3 ?? null,
-                        n4: d.backup.n4 ?? null,
-                        n5: d.backup.n5 ?? null,
-                        backup: null
-                    });
-                    await fetchAndRender();
-                    await saveSnapshot();
-                } else {
-                    alert("Geri üçün əvvəlcə 'Cəmlə' istifadə olunmalıdır!");
-                }
-            };
-
-            const btnDel = document.createElement("button");
-            btnDel.className = "del";
-            btnDel.textContent = "Sil";
-            btnDel.onclick = async () => {
-                if (!loggedIn) return;
-                if (!confirm("Bu sətir silinsin?")) return;
-                await deleteDoc(doc(db, "rows", docId));
-                await fetchAndRender();
-                await saveSnapshot();
-            };
-
-            ops.appendChild(btnSum);
-            ops.appendChild(btnUndo);
-            ops.appendChild(btnDel);
-            tdOps.appendChild(ops);
-            tr.appendChild(tdOps);
-
-            return tr;
-        }
-
-        async function fetchAndRender() {
-            const q = query(rowsCol, orderBy("createdAt", "asc"));
-            const snap = await getDocs(q);
             latestDocs = [];
             snap.forEach(d => latestDocs.push({ id: d.id, data: d.data() }));
-            renderFromDocs(latestDocs);
+            if (isEditing) hasPendingSnapshot = true;
+            else renderFromDocs(latestDocs);
+            setStatus("Firestore OK (real-time)");
+        }, err => setStatus("Firestore Xəta: " + err.message));
+    }
+
+    function stopLive() {
+        if (unsubscribeLive) { unsubscribeLive(); unsubscribeLive = null; }
+    }
+
+    function renderFromDocs(docs) {
+        tbody.innerHTML = "";
+        let total = 0, idx = 0;
+        docs.forEach(({ id, data }) => {
+            const tr = createRow(id, data, idx);
+            tbody.appendChild(tr);
+            for (let i = 1; i <= 5; i++) total += Number(data["n" + i] ?? 0) || 0;
+            idx++;
+        });
+        umumiEl.textContent = fmt(total);
+    }
+
+    function setVisualClass(inputEl, value) {
+        inputEl.classList.remove('neg', 'pos');
+        if (value !== null && !Number.isNaN(Number(value))) {
+            const numVal = Number(value);
+            if (numVal < 0) inputEl.classList.add('neg');
+            else if (numVal > 0) inputEl.classList.add('pos');
+        }
+    }
+
+    function labelTd(td, label) {
+        td.setAttribute("data-label", label);
+        return td;
+    }
+
+    function createRow(docId, data, index) {
+        const tr = document.createElement("tr");
+        tr.dataset.id = docId;
+
+        const tdNo = labelTd(document.createElement("td"), "#");
+        tdNo.textContent = index + 1;
+        tr.appendChild(tdNo);
+
+        const tdAcc = labelTd(document.createElement("td"), "Hesab");
+        const inpAcc = document.createElement("input");
+        inpAcc.type = "text";
+        inpAcc.placeholder = "Hesab adı";
+        inpAcc.value = data.account || "";
+        inpAcc.onblur = async () => {
+            if (!loggedIn) return;
+            await updateDoc(doc(db, "rows", docId), { account: inpAcc.value ?? "" });
+            await saveSnapshot();
+        };
+        tdAcc.appendChild(inpAcc);
+        tr.appendChild(tdAcc);
+
+        const numberInputs = [];
+        for (let i = 1; i <= 5; i++) {
+            const td = labelTd(document.createElement("td"), String(i));
+            const inp = document.createElement("input");
+            inp.type = "number";
+            inp.step = "any";
+            const current = (data["n" + i] ?? "") === null ? "" : (data["n" + i] ?? "");
+            inp.value = current;
+            setVisualClass(inp, current);
+
+            inp.onblur = async () => {
+                if (!loggedIn) return;
+                const v = inp.value === "" ? null : Number(inp.value);
+                setVisualClass(inp, v);
+                await updateDoc(doc(db, "rows", docId), { ["n" + i]: v });
+                await fetchAndRender();
+                await saveSnapshot();
+            };
+
+            td.appendChild(inp);
+            tr.appendChild(td);
+            numberInputs.push(inp);
         }
 
-        yeniBtn.onclick = async () => {
+        const tdOps = labelTd(document.createElement("td"), "Əməliyyat");
+        const ops = document.createElement("div");
+        ops.className = "ops";
+
+        const btnSum = document.createElement("button");
+        btnSum.className = "sum";
+        btnSum.textContent = "Cəmlə";
+        btnSum.onclick = async () => {
             if (!loggedIn) return;
-            await addDoc(rowsCol, {
-                account: "",
-                n1: null,
+            const cur = {
+                n1: Number(numberInputs[0].value) || 0,
+                n2: Number(numberInputs[1].value) || 0,
+                n3: Number(numberInputs[2].value) || 0,
+                n4: Number(numberInputs[3].value) || 0,
+                n5: Number(numberInputs[4].value) || 0,
+            };
+            const backup = {
+                n1: numberInputs[0].value === "" ? null : Number(numberInputs[0].value),
+                n2: numberInputs[1].value === "" ? null : Number(numberInputs[1].value),
+                n3: numberInputs[2].value === "" ? null : Number(numberInputs[2].value),
+                n4: numberInputs[3].value === "" ? null : Number(numberInputs[3].value),
+                n5: numberInputs[4].value === "" ? null : Number(numberInputs[4].value),
+            };
+            const sum = cur.n1 + cur.n2 + cur.n3 + cur.n4 + cur.n5;
+            await updateDoc(doc(db, "rows", docId), {
+                backup,
+                n1: sum,
                 n2: null,
                 n3: null,
                 n4: null,
-                n5: null,
-                createdAt: serverTimestamp(),
-                backup: null
+                n5: null
             });
             await fetchAndRender();
             await saveSnapshot();
         };
 
-        async function saveSnapshot() {
-            try {
-                if (!loggedIn) return;
-                const qRows = query(rowsCol, orderBy("createdAt", "asc"));
-                const snap = await getDocs(qRows);
-                const rows = [];
-                let i = 1;
-                snap.forEach(docu => {
-                    const r = docu.data();
-                    rows.push({
-                        no: i++,
-                        account: r.account || "",
-                        n1: r.n1 ?? "",
-                        n2: r.n2 ?? "",
-                        n3: r.n3 ?? "",
-                        n4: r.n4 ?? "",
-                        n5: r.n5 ?? ""
-                    });
+        const btnUndo = document.createElement("button");
+        btnUndo.className = "undo";
+        btnUndo.textContent = "Geri";
+        btnUndo.onclick = async () => {
+            if (!loggedIn) return;
+            const rowRef = doc(db, "rows", docId);
+            const rowSnap = await getDoc(rowRef);
+            const d = rowSnap.data();
+            if (d && d.backup) {
+                await updateDoc(rowRef, {
+                    n1: d.backup.n1 ?? null,
+                    n2: d.backup.n2 ?? null,
+                    n3: d.backup.n3 ?? null,
+                    n4: d.backup.n4 ?? null,
+                    n5: d.backup.n5 ?? null,
+                    backup: null
                 });
-                await addDoc(snapsCol, {
-                    createdAt: serverTimestamp(),
-                    rows
-                });
-            } catch (e) {
-                console.warn("Tarixçə yazılmadı:", e.message);
+                await fetchAndRender();
+                await saveSnapshot();
+            } else {
+                alert("Geri üçün əvvəlcə 'Cəmlə' istifadə olunmalıdır!");
             }
-        }
-
-        historyBtn.onclick = async () => {
-            if (!loggedIn) return;
-            showView("historyPanel");
-            backLiveBtn.style.display = "inline-block";
-            await renderHistory();
-        };
-        backLiveBtn.onclick = () => {
-            if (!loggedIn) return;
-            showView("appKassa");
-            backLiveBtn.style.display = "none";
         };
 
-        async function renderHistory() {
-            try {
-                snapshotsDiv.innerHTML = "<div style='text-align: center; color: #6b7280;'>Yüklənir...</div>";
-                const qSnaps = query(snapsCol, orderBy("createdAt", "desc"));
-                const snap = await getDocs(qSnaps);
-                if (snap.empty) {
-                    snapshotsDiv.innerHTML = "<div style='text-align: center; color: #9ca3af;'><i>Hələ tarixçə yoxdur.</i></div>";
-                    return;
-                }
-                const parts = [];
-                snap.forEach(s => {
-                    const d = s.data();
-                    const when = d.createdAt?.toDate?.() ? d.createdAt.toDate().toLocaleString("az-AZ") : "(vaxt yoxdur)";
-                    const rows = d.rows || [];
-                    let rowsHtml = `<table class="history-table"><thead><tr>
-                        <th>#</th><th>Hesab</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
-                    </tr></thead><tbody>`;
-                    rows.forEach(r => {
-                        rowsHtml += `<tr>
-                            <td>${r.no ?? ""}</td>
-                            <td>${escapeHtml(r.account ?? "")}</td>
-                            <td>${r.n1 ?? ""}</td><td>${r.n2 ?? ""}</td><td>${r.n3 ?? ""}</td><td>${r.n4 ?? ""}</td><td>${r.n5 ?? ""}</td>
-                        </tr>`;
-                    });
-                    rowsHtml += `</tbody></table>`;
-                    parts.push(`<div class="snap"><h4>${when}</h4>${rowsHtml}</div>`);
-                });
-                snapshotsDiv.innerHTML = parts.join("");
-            } catch (e) {
-                snapshotsDiv.innerHTML = "";
-                alert("Tarixçə oxuna bilmədi: " + e.message);
-            }
-        }
+        const btnDel = document.createElement("button");
+        btnDel.className = "del";
+        btnDel.textContent = "Sil";
+        btnDel.onclick = async () => {
+            if (!loggedIn) return;
+            if (!confirm("Bu sətir silinsin?")) return;
+            await deleteDoc(doc(db, "rows", docId));
+            await fetchAndRender();
+            await saveSnapshot();
+        };
 
-        function escapeHtml(s) {
-            return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+        ops.appendChild(btnSum);
+        ops.appendChild(btnUndo);
+        ops.appendChild(btnDel);
+        tdOps.appendChild(ops);
+        tr.appendChild(tdOps);
+
+        return tr;
+    }
+
+    async function fetchAndRender() {
+        const q = query(rowsCol, orderBy("createdAt", "asc"));
+        const snap = await getDocs(q);
+        latestDocs = [];
+        snap.forEach(d => latestDocs.push({ id: d.id, data: d.data() }));
+        renderFromDocs(latestDocs);
+    }
+
+    yeniBtn.onclick = async () => {
+        if (!loggedIn) return;
+        await addDoc(rowsCol, {
+            account: "",
+            n1: null, n2: null, n3: null, n4: null, n5: null,
+            createdAt: serverTimestamp(),
+            backup: null
+        });
+        await fetchAndRender();
+        await saveSnapshot();
+    };
+
+    async function saveSnapshot() {
+        try {
+            if (!loggedIn) return;
+            const qRows = query(rowsCol, orderBy("createdAt", "asc"));
+            const snap = await getDocs(qRows);
+            const rows = [];
+            let i = 1;
+            snap.forEach(docu => {
+                const r = docu.data();
+                rows.push({
+                    no: i++,
+                    account: r.account || "",
+                    n1: r.n1 ?? "",
+                    n2: r.n2 ?? "",
+                    n3: r.n3 ?? "",
+                    n4: r.n4 ?? "",
+                    n5: r.n5 ?? ""
+                });
+            });
+            await addDoc(snapsCol, { createdAt: serverTimestamp(), rows });
+        } catch (e) {
+            console.warn("Tarixçə yazılmadı:", e.message);
         }
-    </script>
+    }
+
+    historyBtn.onclick = async () => {
+        if (!loggedIn) return;
+        showView("historyPanel");
+        backLiveBtn.style.display = "inline-block";
+        await renderHistory();
+    };
+    backLiveBtn.onclick = () => {
+        if (!loggedIn) return;
+        showView("appKassa");
+        backLiveBtn.style.display = "none";
+    };
+
+    async function renderHistory() {
+        try {
+            snapshotsDiv.innerHTML = "<div style='text-align: center; color: #6b7280;'>Yüklənir...</div>";
+            const qSnaps = query(snapsCol, orderBy("createdAt", "desc"));
+            const snap = await getDocs(qSnaps);
+            if (snap.empty) {
+                snapshotsDiv.innerHTML = "<div style='text-align: center; color: #9ca3af;'><i>Hələ tarixçə yoxdur.</i></div>";
+                return;
+            }
+            const parts = [];
+            snap.forEach(s => {
+                const d = s.data();
+                const when = d.createdAt?.toDate?.() ? d.createdAt.toDate().toLocaleString("az-AZ") : "(vaxt yoxdur)";
+                const rows = d.rows || [];
+                let rowsHtml = `<table class="history-table"><thead><tr>
+                    <th>#</th><th>Hesab</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+                </tr></thead><tbody>`;
+                rows.forEach(r => {
+                    rowsHtml += `<tr>
+                        <td>${r.no ?? ""}</td>
+                        <td>${escapeHtml(r.account ?? "")}</td>
+                        <td>${r.n1 ?? ""}</td><td>${r.n2 ?? ""}</td><td>${r.n3 ?? ""}</td><td>${r.n4 ?? ""}</td><td>${r.n5 ?? ""}</td>
+                    </tr>`;
+                });
+                rowsHtml += `</tbody></table>`;
+                parts.push(`<div class="snap"><h4>${when}</h4>${rowsHtml}</div>`);
+            });
+            snapshotsDiv.innerHTML = parts.join("");
+        } catch (e) {
+            snapshotsDiv.innerHTML = "";
+            alert("Tarixçə oxuna bilmədi: " + e.message);
+        }
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+</script>
 </body>
 </html>
